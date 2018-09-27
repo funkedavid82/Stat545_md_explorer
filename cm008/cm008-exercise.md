@@ -540,21 +540,35 @@ gapminder %>%
 1.  Compute the relative gdp (NOT per capita!) of each country compared to Canada (= GDP of a country / GDP of Canada).
 
 ``` r
-# cda <- gapminder %>%
-#   mutate(gdp = gdpPercap * pop) %>%
-#   filter(country == "Canada") %>%
-#   `[[`("gdp")
-# 
-# 
-# my_df <- gapminder %>%
-#   mutate(cda_gdp = rep(cda, nlevels(country)),
-#   gdp = gdpPercap * pop, rel_gdp = gdp/cda_gdp)
-# 
-# my_df %>%
-#   filter(country == "Canada")
-# 
-# summary(my_df$rel_gdp)
+cda <- gapminder %>%
+  mutate(gdp = gdpPercap * pop) %>%
+  filter(country == "Canada") %>%
+  `[[`("gdp")
+
+
+my_df <- gapminder %>%
+  mutate(cda_gdp = rep(cda, nlevels(country)), gdp = gdpPercap * pop, rel_gdp = gdp/cda_gdp)
+
+##Sanity check
+my_df %>% filter(country == "Canada") %>%
+  select(country, continent, year, rel_gdp)
 ```
+
+    ## # A tibble: 12 x 4
+    ##    country continent  year rel_gdp
+    ##    <fct>   <fct>     <int>   <dbl>
+    ##  1 Canada  Americas   1952       1
+    ##  2 Canada  Americas   1957       1
+    ##  3 Canada  Americas   1962       1
+    ##  4 Canada  Americas   1967       1
+    ##  5 Canada  Americas   1972       1
+    ##  6 Canada  Americas   1977       1
+    ##  7 Canada  Americas   1982       1
+    ##  8 Canada  Americas   1987       1
+    ##  9 Canada  Americas   1992       1
+    ## 10 Canada  Americas   1997       1
+    ## 11 Canada  Americas   2002       1
+    ## 12 Canada  Americas   2007       1
 
 Sanity check: are Canada's numbers = 1? What is the spread of numbers like (should be small)?
 
